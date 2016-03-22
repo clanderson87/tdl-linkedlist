@@ -119,6 +119,7 @@ namespace UnitTestSinglyLinkedLists
         {
             SinglyLinkedList list = new SinglyLinkedList();
             //list.AddLast("Test");
+            list.AddFirst("Test");
             Assert.AreEqual("{ }", list.ToString());
         }
 
@@ -205,11 +206,11 @@ namespace UnitTestSinglyLinkedLists
             list.AddLast("foo");
             list.AddLast("grille");
             // NOTE: This assert isn't necessary.  It is merely here to remind you of / verify the state of the list prior to inserting the new node.
-            var expected = new string[] { "foo", "grille" };
-            CollectionAssert.AreEqual(expected, list.ToArray());
+            //var expected = new string[] { "foo", "grille" };
+            //CollectionAssert.AreEqual(expected, list.ToArray());
 
             list.AddAfter("foo", "bar");
-            expected = new string[] { "foo", "bar", "grille" };
+            var expected = new string[] { "foo", "bar", "grille" };
             CollectionAssert.AreEqual(expected, list.ToArray());
         }
 

@@ -11,14 +11,14 @@ namespace SinglyLinkedLists
 
         public SinglyLinkedList()
         {
-            
+
         }
 
         public override string ToString()
         {
             string toString = "{ ";
             SinglyLinkedListNode newNode = FirstLocation;
-            
+
             if (newNode == null)
             {
                 return "{ }";
@@ -26,9 +26,9 @@ namespace SinglyLinkedLists
 
             while (newNode != null)
             {
-                toString += "\"" + newNode.Value + "\""; 
+                toString += "\"" + newNode.Value + "\"";
                 newNode = newNode.Next;
-                if(newNode != null)
+                if (newNode != null)
                 {
                     toString += ", ";
                 }
@@ -40,10 +40,10 @@ namespace SinglyLinkedLists
         // READ: http://msdn.microsoft.com/en-us/library/aa691335(v=vs.71).aspx
         public SinglyLinkedList(params object[] values)
         {
-            //for (int i = 0; i < values.Length; i++)
-            //{
-            //    this.AddLast(values[i] as String);
-            //}
+            for (int i = 0; i < values.Length; i++)
+            {
+                this.AddLast(values[i] as String);
+            }
         }
 
         // READ: http://msdn.microsoft.com/en-us/library/6x16t2tx.aspx
@@ -55,7 +55,29 @@ namespace SinglyLinkedLists
 
         public void AddAfter(string existingValue, string value)
         {
-            throw new NotImplementedException();
+            SinglyLinkedListNode newNode = new SinglyLinkedListNode(value);
+            SinglyLinkedListNode incrementer = FirstLocation;
+            int count = this.Count();
+
+            for (int i = 0; i < count; i++)
+            {
+                if (incrementer.Value == existingValue)
+                {
+                    SinglyLinkedListNode oldNode = incrementer;
+                    newNode.Next = incrementer.Next;
+                    oldNode.Next = newNode;
+                    break;
+                }
+                else if (i == (count - 1) && incrementer.Value != existingValue)
+                {
+                    throw new ArgumentException();
+                }
+                else
+                {
+                    incrementer = incrementer.Next;
+                }
+            } //close forLoop
+
         }
 
         public void AddFirst(string value)
@@ -71,12 +93,12 @@ namespace SinglyLinkedLists
 
             if (this.First() == null)
             {
-                FirstLocation = newNode;   
+                FirstLocation = newNode;
             }
             else
             {
                 SinglyLinkedListNode latestNode = FirstLocation;
-                while(!(latestNode.IsLast()))
+                while (!(latestNode.IsLast()))
                 {
                     latestNode = latestNode.Next;
                 }
@@ -88,8 +110,8 @@ namespace SinglyLinkedLists
         public int Count()
         {
             int count = 0;
-            
-            if(FirstLocation != null)
+
+            if (FirstLocation != null)
             {
                 SinglyLinkedListNode incrementer = FirstLocation;
                 while (incrementer != null)
@@ -100,7 +122,7 @@ namespace SinglyLinkedLists
                 return count;
             }
             else { return 0; }
-            
+
         }
 
         public string ElementAt(int index)
@@ -113,7 +135,7 @@ namespace SinglyLinkedLists
             }
             else
             {
-                for(int i = 0; i < index; i++)
+                for (int i = 0; i < index; i++)
                 {
                     incrementer = incrementer.Next;
                 }
@@ -128,7 +150,15 @@ namespace SinglyLinkedLists
 
         public int IndexOf(string value)
         {
-            throw new NotImplementedException();
+            string[] thisArray = this.ToArray();
+            for (int i = 0; i < thisArray.Length; i++)
+            {
+                if (thisArray[i].ToString() == value)
+                {
+                    return i;
+                }
+            }
+            return -1;
         }
 
         public bool IsSorted()
@@ -155,7 +185,7 @@ namespace SinglyLinkedLists
                 }
                 return LastNode.Value.ToString();
             }
-            
+
         }
 
         public void Remove(string value)
@@ -166,14 +196,14 @@ namespace SinglyLinkedLists
         public void Sort()
         {
             throw new NotImplementedException();
-        } 
+        }
 
         public string[] ToArray()
         {
             int count = this.Count();
             SinglyLinkedListNode newNode = FirstLocation;
             string[] toArray = new string[count];
-            
+
 
             int i = 0;
             while (newNode != null)
@@ -184,7 +214,7 @@ namespace SinglyLinkedLists
             }
             //toArray[count - 1] = this.Last();
             return toArray;
-            
+
             /*for (int i = 0; i < count; i++)
             {
                 toArray[i] = newNode.Value;
