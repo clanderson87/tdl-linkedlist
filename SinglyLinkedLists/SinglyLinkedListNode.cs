@@ -15,14 +15,21 @@ namespace SinglyLinkedLists
         private SinglyLinkedListNode next;
         public SinglyLinkedListNode Next
         {
-            get { throw new NotImplementedException(); }
-            set { throw new NotImplementedException(); }
+            get { return this.next; }
+            set { this.next = value;
+                /*'value' keyword refers to anything on the right side of the assign operator '=' when the property is being used*/
+                if (value == this)
+                {
+                    throw new ArgumentException();
+                }
+                this.next = value;
+            }
         }
 
-        private string value;
+        private string value; //access using "this.value" 
         public string Value 
         {
-            get { throw new NotImplementedException(); }
+            get { return value; }
         }
 
         public static bool operator <(SinglyLinkedListNode node1, SinglyLinkedListNode node2)
@@ -39,8 +46,7 @@ namespace SinglyLinkedLists
 
         public SinglyLinkedListNode(string value)
         {
-            throw new NotImplementedException();
-
+            this.value = value;
             // Used by the visualizer:
             allNodes.Add(this);
         }
@@ -48,12 +54,31 @@ namespace SinglyLinkedLists
         // READ: http://msdn.microsoft.com/en-us/library/system.icomparable.compareto.aspx
         public int CompareTo(Object obj)
         {
-            throw new NotImplementedException();
+            SinglyLinkedListNode temp = obj as SinglyLinkedListNode;
+            return this.value.CompareTo(temp?.value);
         }
 
         public bool IsLast()
         {
-            throw new NotImplementedException();
+            if (this.next == null)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+
+        public override string ToString()
+        {
+            return this.value;
+        }
+
+        public override bool Equals(object obj)
+        {
+            SinglyLinkedListNode temp = obj as SinglyLinkedListNode;
+
+            return (this.value == temp?.ToString()); //the question here is a type of c# 6; 
         }
     }
 }
