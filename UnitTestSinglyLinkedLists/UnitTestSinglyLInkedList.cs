@@ -119,7 +119,7 @@ namespace UnitTestSinglyLinkedLists
         {
             SinglyLinkedList list = new SinglyLinkedList();
             //list.AddLast("Test");
-            list.AddFirst("Test");
+            //list.AddFirst("Test");
             Assert.AreEqual("{ }", list.ToString());
         }
 
@@ -479,5 +479,22 @@ namespace UnitTestSinglyLinkedLists
             var expected = new string[] { "bar", "bar", "foo", "grille" };
             CollectionAssert.AreEqual(expected, list.ToArray());
         }
+
+        [TestMethod]
+        public void NodeAtGetsANode()
+        {
+            SinglyLinkedList list = new SinglyLinkedList("foo", "bar", "baz");
+            Assert.AreEqual("bar", list.NodeAt(1).ToString());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NodeAtOnEmptyListThrowsException()
+        {
+            SinglyLinkedList list = new SinglyLinkedList();
+            list.NodeAt(1);
+        }
+
+    
     }
 }

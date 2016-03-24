@@ -49,8 +49,44 @@ namespace SinglyLinkedLists
         // READ: http://msdn.microsoft.com/en-us/library/6x16t2tx.aspx
         public string this[int i]
         {
-            get { return this[i]; }
-            set { throw new NotImplementedException(); }
+            get { return this.ElementAt(i); }
+            set {
+                SinglyLinkedListNode FLnode = FirstLocation;
+                SinglyLinkedListNode nextNode = new SinglyLinkedListNode(value);
+
+                if (i == 0)
+                {
+                    var getNext = FLnode.Next;
+                    FirstLocation = nextNode;
+                    nextNode.Next = getNext;
+                    return;
+                }
+                else
+                {
+                    SinglyLinkedListNode before = this.NodeAt(i - 1);
+                    before.Next = nextNode;
+                }
+                }//end setter
+
+        }
+
+        public SinglyLinkedListNode NodeAt(int index)
+        {
+            SinglyLinkedListNode incrementer = FirstLocation;
+            string str = this.ElementAt(index);
+
+            for (int i = 0; i <= index; i++)
+            {
+                if (incrementer.Value == str)
+                {
+                    return incrementer;
+                }
+                else
+                {
+                    incrementer = incrementer.Next;
+                }
+            }
+            throw new ArgumentOutOfRangeException();
         }
 
         public void AddAfter(string existingValue, string value)
@@ -137,6 +173,10 @@ namespace SinglyLinkedLists
             {
                 for (int i = 0; i < index; i++)
                 {
+                    if(incrementer.Next == null)
+                    {
+                        break;
+                    }
                     incrementer = incrementer.Next;
                 }
                 return incrementer.Value.ToString();
@@ -163,7 +203,26 @@ namespace SinglyLinkedLists
 
         public bool IsSorted()
         {
-            throw new NotImplementedException();
+            string[] sorted = this.ToArray();
+
+            if(sorted.Length <= 1)
+            {
+                return true; //because empty / 1 item lists are inherently sorted;
+            }
+            else
+            {
+                for (int i = 0; i < sorted.Length; i++)
+                //for each item in this list.ToArray();
+                {
+                    if (this[i].CompareTo(this[i+1]) > 0)
+                    //if node compared to the nextNode is greater than 0, than list.IsSorted() == false.
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }   //insertion sort - assume this
+                //merge sort - secondary sort
         }
 
         // HINT 1: You can extract this functionality (finding the last item in the list) from a method you've already written!
@@ -190,7 +249,25 @@ namespace SinglyLinkedLists
 
         public void Remove(string value)
         {
-            throw new NotImplementedException();
+            int count = this.Count();
+            int i = this.IndexOf(value);
+
+            if(i >= count || i == -1)
+            {
+                return;
+            }
+
+            if (i == 0)
+            {
+                FirstLocation = FirstLocation.Next;
+            }
+            else
+            {
+                SinglyLinkedListNode before = this.NodeAt(i - 1);
+                SinglyLinkedListNode toRemove = before.Next;
+
+                before.Next = toRemove.Next;
+            }
         }
 
         public void Sort()
@@ -212,15 +289,7 @@ namespace SinglyLinkedLists
                 i++;
                 newNode = newNode.Next;
             }
-            //toArray[count - 1] = this.Last();
             return toArray;
-
-            /*for (int i = 0; i < count; i++)
-            {
-                toArray[i] = newNode.Value;
-                newNode = newNode.Next;
-            }
-            return toArray;*/
         }
     }
 }
