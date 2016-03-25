@@ -66,7 +66,7 @@ namespace SinglyLinkedLists
                     SinglyLinkedListNode before = this.NodeAt(i - 1);
                     before.Next = nextNode;
                 }
-                }//end setter
+           }//end setter
 
         }
 
@@ -175,7 +175,7 @@ namespace SinglyLinkedLists
                 {
                     if(incrementer.Next == null)
                     {
-                        break;
+                        break;//because I don't want to set incrementer to null, throws NullRefExcep
                     }
                     incrementer = incrementer.Next;
                 }
@@ -272,7 +272,40 @@ namespace SinglyLinkedLists
 
         public void Sort()
         {
-            throw new NotImplementedException();
+            int count = this.Count();
+            if (count <= 1)
+            {
+                return;//return inherantly sorted lists.
+            }
+            else
+            {
+                int i = 0;
+                //as long as the list isn't sorted
+                while (!IsSorted())
+                {
+                    
+                    SinglyLinkedListNode node = this.NodeAt(i);
+                    SinglyLinkedListNode nextNode = node.Next;
+                    int sortThis = this[i].CompareTo(this[i + 1]);
+
+                    if (sortThis > 0) // if compareTo renders 1+ (which means not sorted)
+                    {
+                        //this should flip flop the value         
+                            this[i] = nextNode.Value;
+                            this.NodeAt(i + 1).Next = nextNode.Next;
+                            this.AddAfter(this.ElementAt(i), node.Value);
+                    }
+                    
+
+                    if (node.Next == null)
+                    {
+                        i = 0;
+                    }
+
+                    i++;
+                }//end while
+
+            }//end else
         }
 
         public string[] ToArray()
