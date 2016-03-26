@@ -257,7 +257,7 @@ namespace UnitTestSinglyLinkedLists
         }
 
         [TestMethod]
-        public void ListBracketAssignmentPreservesRestOfList()
+        public void ListBracketAssignmentPreservesRestOfList()//this test's name doesn't make sense
         {
             SinglyLinkedList list = new SinglyLinkedList("foo", "bar", "grille");
             list[2] = "cat";

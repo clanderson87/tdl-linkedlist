@@ -270,6 +270,11 @@ namespace SinglyLinkedLists
             }
         }
 
+        public void RemoveIndex(int i)
+        {
+            this.Remove(this[i]);
+        }
+
         public void Sort()
         {
             int count = this.Count();
@@ -283,25 +288,63 @@ namespace SinglyLinkedLists
                 //as long as the list isn't sorted
                 while (!IsSorted())
                 {
+                    if (i >= count)
+                    {
+                        i = 0;
+                    } //because if i is greater than count when not sorted is true, everything will break.
                     
                     SinglyLinkedListNode node = this.NodeAt(i);
                     SinglyLinkedListNode nextNode = node.Next;
-                    int sortThis = this[i].CompareTo(this[i + 1]);
+                    int sortThis = this[i].CompareTo(this[i + 1]);//because node.Value.CompareTo(nextNode.Value) throws a NRE.
+                    int indexForDupes = this.IndexOf(node.Value);
 
                     if (sortThis > 0) // if compareTo renders 1+ (which means not sorted)
                     {
-                        //this should flip flop the value         
-                            this[i] = nextNode.Value;
-                            this.NodeAt(i + 1).Next = nextNode.Next;
-                            this.AddAfter(this.ElementAt(i), node.Value);
-                    }
+                        if (indexForDupes != i) //if this.IndexOf(node.Value) returns something other than i, meaning it encountered the element BEFORE i.
+                        {
+                            SinglyLinkedListNode putThisNext = this.NodeAt(this.IndexOf(node.Value)).Next;
+                            this[indexForDupes + 1] = node.Value;
+                            node.Next = putThisNext;
+
+                            /*SinglyLinkedListNode firstDupe = this.NodeAt(indexForDupes);
+                            this.RemoveIndex(indexForDupes);
+                            int countTheDupes = 1;
+                            int tryThisIndex = this.IndexOf(node.Value); //restablish another index for this node.Value
+                            while (tryThisIndex != i || tryThisIndex != -1) //if this new index for node.Value isn't the current index of i.
+                            {
+                                int j = this.IndexOf(node.Value);//I know this is already a thing, but it's easier for me if it's another thing.
+                                countTheDupes++; //increment countTheDupes so we know how mny dupes need to be readded.
+                                this.RemoveIndex(j); //remove another dupe that isn't at the index of i.
+                                tryThisIndex = this.IndexOf(node.Value);//recheck if tryThisIndex is i. if not, while loop should continue.
+                            }
+                            this.AddAfter(this[indexForDupes - 1], node.Value);//readds firstDupe at firstDupeLocation
+
+                            for (int doopLoop = 0; doopLoop < countTheDupes; doopLoop++)
+                            {
+                                this.AddAfter(node.Value, node.Value);
+                            }
+
+                            i = indexForDupes + countTheDupes;*/
+                        }
+                        else if (nextNode.Next != null)
+                        {
+                            this.Remove(node.Value);
+                            if(this.IndexOf(nextNode.Value) != i)
+                            {
+                                this.AddAfter(nextNode.Next.Value, node.Value);
+                            }
+                            else
+                            {
+                                this.AddAfter(nextNode.Value, node.Value);
+                            }
+                        }
+                        else
+                        {
+                            this.Remove(node.Value);
+                            this.AddLast(node.Value);
+                        }
+                        }//end if(sortThis > 0).
                     
-
-                    if (node.Next == null)
-                    {
-                        i = 0;
-                    }
-
                     i++;
                 }//end while
 
