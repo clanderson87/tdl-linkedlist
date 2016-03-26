@@ -298,22 +298,17 @@ namespace SinglyLinkedLists
                     {
                         if (this.IndexOf(nextNode.Value) != i + 1) //if this picks up an index of node.Value BEFORE i (meaning a dupe).
                         {
-                            this.AddAfter(nextNode.Value, nextNode.Value);
-                            //this.Remove(nextNode.ToString());
-                            node.Next = nextNode.Next;
+                            this.AddAfter(nextNode.Value, nextNode.Value); //find the nextnode (which already exists) and add the dupe after.
+                            node.Next = nextNode.Next; //then I kill the old, one-too-many dupe. holy fuck it works.
                         }
                         else
                         {
-                            this.AddAfter(nextNode.Value, node.Value);
-                            this.Remove(node.Value);
+                            this.AddAfter(nextNode.Value, node.Value); //reverse the order of these two nodes by adding node behind nextNode.
+                            this.Remove(node.Value);  //removes the first (incorrectly sorted) occurance of node.Value.
                         }
                     }//end if(sortThis > 0).
-                    
-
-
                     i++;
                 }//end while
-
             }//end else
         }
 
