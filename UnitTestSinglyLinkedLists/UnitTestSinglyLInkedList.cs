@@ -118,6 +118,8 @@ namespace UnitTestSinglyLinkedLists
         public void ToStringOnEmptyList()
         {
             SinglyLinkedList list = new SinglyLinkedList();
+            //list.AddLast("Test");
+            //list.AddFirst("Test");
             Assert.AreEqual("{ }", list.ToString());
         }
 
@@ -204,11 +206,11 @@ namespace UnitTestSinglyLinkedLists
             list.AddLast("foo");
             list.AddLast("grille");
             // NOTE: This assert isn't necessary.  It is merely here to remind you of / verify the state of the list prior to inserting the new node.
-            var expected = new string[] { "foo", "grille" };
-            CollectionAssert.AreEqual(expected, list.ToArray());
+            //var expected = new string[] { "foo", "grille" };
+            //CollectionAssert.AreEqual(expected, list.ToArray());
 
             list.AddAfter("foo", "bar");
-            expected = new string[] { "foo", "bar", "grille" };
+            var expected = new string[] { "foo", "bar", "grille" };
             CollectionAssert.AreEqual(expected, list.ToArray());
         }
 
@@ -255,7 +257,7 @@ namespace UnitTestSinglyLinkedLists
         }
 
         [TestMethod]
-        public void ListBracketAssignmentPreservesRestOfList()
+        public void ListBracketAssignmentPreservesRestOfList()//this test's name doesn't make sense
         {
             SinglyLinkedList list = new SinglyLinkedList("foo", "bar", "grille");
             list[2] = "cat";
@@ -477,5 +479,22 @@ namespace UnitTestSinglyLinkedLists
             var expected = new string[] { "bar", "bar", "foo", "grille" };
             CollectionAssert.AreEqual(expected, list.ToArray());
         }
+
+        [TestMethod]
+        public void NodeAtGetsANode()
+        {
+            SinglyLinkedList list = new SinglyLinkedList("foo", "bar", "baz");
+            Assert.AreEqual("bar", list.NodeAt(1).ToString());
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void NodeAtOnEmptyListThrowsException()
+        {
+            SinglyLinkedList list = new SinglyLinkedList();
+            list.NodeAt(1);
+        }
+
+    
     }
 }
