@@ -299,7 +299,7 @@ namespace SinglyLinkedLists
                         if (this.IndexOf(nextNode.Value) != i + 1) //if this picks up an index of node.Value BEFORE i (meaning a dupe).
                         {
                             this.AddAfter(nextNode.Value, nextNode.Value); //find the nextnode (which already exists) and add the dupe after.
-                            node.Next = nextNode.Next; //then I kill the old, one-too-many dupe. holy fuck it works.
+                            node.Next = nextNode.Next; //then I kill the old, one-too-many dupe. holy jimjam it works.
                         }
                         else
                         {
